@@ -105,3 +105,7 @@ func _on_Preset3_pressed():
 	Vars.numberOfSteps = numberOfSteps
 	Vars.randomizeSeed = randomizeSeed
 	reloadLevel()
+
+
+func _on_Exit_pressed():
+	get_tree().quit()
