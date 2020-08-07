@@ -109,3 +109,7 @@ func _on_Preset3_pressed():
 
 func _on_Exit_pressed():
 	get_tree().quit()
+
+
+func _on_CheckButton_pressed():
+	$GUI.visible = !($CheckButton.pressed)

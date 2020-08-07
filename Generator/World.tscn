@@ -97,7 +97,6 @@ tile_data = PoolIntArray( -1, 0, 524289, -65536, 0, 524289, -65535, 0, 524289, -
 [node name="GUI" type="Control" parent="."]
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -118,10 +117,12 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 0.996
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 256.0
-margin_bottom = 720.0
+margin_right = -24.0
+margin_bottom = -0.108032
 size_flags_horizontal = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -215,6 +216,16 @@ text = "Exit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CheckButton" type="CheckButton" parent="."]
+margin_left = 1141.94
+margin_top = -1.68179
+margin_right = 1281.94
+margin_bottom = 38.3182
+text = "Toggle UI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="GUI/MarginContainer/Panel/VBoxContainer/Direction" to="." method="_on_Direction_pressed"]
 [connection signal="pressed" from="GUI/MarginContainer/Panel/VBoxContainer/Randomize" to="." method="_on_Randomize_pressed"]
 [connection signal="value_changed" from="GUI/MarginContainer/Panel/VBoxContainer/Max step" to="." method="_on_Max_step_value_changed"]
@@ -225,3 +236,4 @@ __meta__ = {
 [connection signal="pressed" from="GUI/MarginContainer/Panel/VBoxContainer/HBoxContainer/Preset3" to="." method="_on_Preset3_pressed"]
 [connection signal="pressed" from="GUI/MarginContainer/Panel/VBoxContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="GUI/MarginContainer/Panel/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="CheckButton" to="." method="_on_CheckButton_pressed"]
