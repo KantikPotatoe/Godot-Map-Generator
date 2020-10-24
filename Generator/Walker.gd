@@ -16,6 +16,8 @@ var maxStepsSinceTurn = 6
 var changeDirectionChance = 0.25
 var useDirectionChange = true
 
+var rooms = []
+
 func _init(p_startingPosition, p_newBorder, p_maxStepsSinceTurn, p_changeDirectionChance, p_useDirectionChange):
 	
 	assert(p_newBorder.has_point(p_startingPosition)) #check if starting point is inside borders
@@ -29,7 +31,7 @@ func _init(p_startingPosition, p_newBorder, p_maxStepsSinceTurn, p_changeDirecti
 	
 	
 func walk(steps):
-	createRoom(position)
+	place_room(position)
 	for step in steps:
 		if useDirectionChange:
 			if randf() <= changeDirectionChance and stepsSinceTurn >= maxStepsSinceTurn:
@@ -53,7 +55,7 @@ func step():
 		return false
 	
 func changeDirection():
-	createRoom(position)
+	place_room(position)
 	stepsSinceTurn = 0
 	var directions = DIRECTIONS.duplicate()
 	directions.erase(direction)
@@ -63,11 +65,24 @@ func changeDirection():
 		direction = directions.pop_front()
 		
 
-func createRoom(p_position):
+
+func create_room(position, size):
+	return {position = position, size = size}
+
+func place_room(p_position):
 	var size = Vector2(randi() % 4 + 2, randi() % 4 + 2)
 	var topLeftCorner = (p_position - size / 2).ceil()
+	rooms.append(create_room(position, size))
 	for y in size.y:
 		for x in size.x:
 			var newStep = topLeftCorner + Vector2(x,y)
 			if borders.has_point(newStep):
 				stepHistory.append(newStep)
+
+func generate_end_room():
+	var end_room = rooms.pop_front()
+	var starting_position = stepHistory.front()
+	for room in rooms:
+		if starting_position.distance_to(room.position) > starting_position.distance_to(end_room.position):
+			end_room = room
+	return end_room

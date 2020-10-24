@@ -2,9 +2,13 @@ extends Node2D
 
 var borders = Rect2(1, 1, 76, 42)
 
+const Player = preload("res://Player.tscn")
+const Exit = preload("res://Exit.tscn")
+
 
 
 onready var tileMap = $TileMap
+
 
 
 
@@ -13,6 +17,7 @@ onready var changeDirectionChance = Vars.changeDirectionChance
 onready var useDirectionChange = Vars.useDirectionChange
 onready var numberOfSteps = Vars.numberOfSteps
 onready var randomizeSeed = Vars.randomizeSeed
+
 
 func _ready():
 	
@@ -24,6 +29,16 @@ func _ready():
 func generateLevel():
 	var walker = Walker.new(Vector2(38,21), borders, maxStepsSinceTurn, changeDirectionChance, useDirectionChange)
 	var map = walker.walk(numberOfSteps)
+	
+	var player = Player.instance()
+	add_child(player)
+	player.position = map.front() * 16
+	
+	var exit = Exit.instance()
+	add_child(exit)
+	exit.position = walker.generate_end_room().position * 16
+	exit.connect("leave_level", self, "reloadLevel")
+	
 	walker.queue_free()
 	for location in map:
 		tileMap.set_cellv(location, -1)
